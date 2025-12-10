@@ -13,10 +13,10 @@ const port = 3000;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
-const db = mysql.createConnection ({
-    host: 'localhost',
-    user: 'root',
-    password: '220504',
+const db = mysql.createConnection({
+    host: '',
+    user: '',
+    password: '',
     database: 'socka'
 });
 
@@ -41,7 +41,7 @@ app.use(fileUpload()); // configure fileupload
 // routes for the app
 app.use('/', homeRoutes);
 app.use('/player', playerRoutes);
-app.get('*', function(req, res, next){
+app.get('*', function (req, res, next) {
     res.status(404);
 
     res.render('404.ejs', {
