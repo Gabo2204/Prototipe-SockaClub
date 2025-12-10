@@ -1,0 +1,129 @@
+<% include partials/header.ejs %>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <span class="hero-subtitle">Portal Oficial de Gestión</span>
+      <h1 class="hero-title">Construye tu Equipo <br>de Ensueño</h1>
+      <p class="text-muted fs-5 mb-5 mx-auto" style="max-width: 600px;">
+        Gestiona tu plantilla profesional, sigue las estadísticas y lleva a tu club a la gloria del campeonato.
+      </p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="row g-4 justify-content-center">
+        <!-- Feature 1 -->
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <img
+                src="https://cdni.iconscout.com/illustration/premium/thumb/football-player-kicking-ball-2936994-2451034.png"
+                alt="Mejor Talento" onerror="this.src='https://placehold.co/200x200/FF2E63/white?text=Talento'">
+            </div>
+            <h3 class="feature-title">Mejor Talento</h3>
+            <p class="feature-desc">Recluta a los mejores jugadores del mundo para fortalecer tu plantilla.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <img
+                src="https://cdni.iconscout.com/illustration/premium/thumb/coach-explaining-strategy-to-players-4352726-3611843.png"
+                alt="Estrategia" onerror="this.src='https://placehold.co/200x200/FF2E63/white?text=Estrategia'">
+            </div>
+            <h3 class="feature-title">Planificación Estratégica</h3>
+            <p class="feature-desc">Crea formaciones ganadoras y tácticas para dominar los partidos de la liga.</p>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <img
+                src="https://cdni.iconscout.com/illustration/premium/thumb/soccer-fans-cheering-team-2936998-2451038.png"
+                alt="Gloria del Club" onerror="this.src='https://placehold.co/200x200/FF2E63/white?text=Gloria'">
+            </div>
+            <h3 class="feature-title">Gloria del Club</h3>
+            <p class="feature-desc">Construye un legado y trae trofeos a casa para tu afición leal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team / Players Section -->
+  <section class="team-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="hero-subtitle">Primer Equipo</span>
+        <h2 class="fw-bold">Plantilla Profesional</h2>
+        <% if (players && players.length> 0) { %>
+          <p class="text-muted">
+            <%= players.length %> jugadores activos
+          </p>
+          <% } %>
+      </div>
+
+      <% if (players && players.length> 0) { %>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+          <% players.forEach((player)=> { %>
+            <div class="col">
+              <div class="player-card-modern">
+                <div class="player-img-wrapper">
+                  <img src="<%= player.image || image %>" alt="<%= player.first_name %>"
+                    onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(player.first_name + '+' + player.last_name) %>&size=300&background=FF2E63&color=fff&bold=true'">
+                </div>
+                <div class="player-content">
+                  <h5 class="player-name">
+                    <%= player.first_name %>
+                      <%= player.last_name %>
+                  </h5>
+                  <p class="player-role">
+                    <%= player.position %>
+                  </p>
+
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <span class="badge bg-light text-dark border">No. <%= player.number %></span>
+                    <small class="text-muted">@<%= player.user_name %></small>
+                  </div>
+
+                  <div class="card-actions">
+                    <a href="/player/edit/<%= player.id %>" class="btn-icon btn-edit" title="Editar Perfil">
+                      <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <form action="/player/delete/<%= player.id %>?_method=DELETE" method="POST" class="d-inline"
+                      onsubmit="return confirm('¿Liberar a <%= player.first_name %> del contrato?');">
+                      <button type="submit" class="btn-icon btn-delete" title="Liberar Jugador">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+        </div>
+        <% } else { %>
+          <div class="text-center py-5">
+            <div class="bg-white p-5 rounded-4 shadow-sm d-inline-block">
+              <i class="bi bi-person-plus fs-1 text-muted mb-3 d-block"></i>
+              <h4>La plantilla está vacía</h4>
+              <p class="text-muted mb-4">Comienza a fichar jugadores para la nueva temporada.</p>
+              <a href="/player/add" class="btn btn-primary-custom">Fichar Nuevo Jugador</a>
+            </div>
+          </div>
+          <% } %>
+    </div>
+  </section>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+
+  </html>

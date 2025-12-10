@@ -1,0 +1,99 @@
+<% include partials/header.ejs %>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-0 p-5 pb-0 text-center">
+                        <div class="d-inline-block p-3 rounded-circle bg-light mb-3 text-primary">
+                            <i class="bi bi-pencil-fill fs-1" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h2 class="fw-bold mb-1">Editar Jugador</h2>
+                        <p class="text-muted">Actualizar información de <%= player.first_name %>
+                                <%= player.last_name %>
+                        </p>
+                    </div>
+
+                    <div class="card-body p-5 pt-4">
+                        <% if (message !='' ) { %>
+                            <div class="alert alert-danger rounded-3" role="alert">
+                                <i class="bi bi-exclamation-circle me-2"></i>
+                                <%= message %>
+                            </div>
+                            <% } %>
+
+                                <form class="edit-player-form needs-validation" action="" method="post"
+                                    enctype="multipart/form-data">
+                                    <h5 class="mb-4 text-muted border-bottom pb-2">Información Personal</h5>
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-6">
+                                            <label
+                                                class="form-label text-muted small fw-bold text-uppercase">Nombre</label>
+                                            <input type="text" class="form-control form-control-lg bg-light border-0"
+                                                name="first_name" id="first-name" value="<%= player.first_name %>"
+                                                required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="form-label text-muted small fw-bold text-uppercase">Apellido</label>
+                                            <input type="text" class="form-control form-control-lg bg-light border-0"
+                                                name="last_name" id="last-name" value="<%= player.last_name %>"
+                                                required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label text-muted small fw-bold text-uppercase">Nombre de
+                                                Usuario (@)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-light border-0 text-muted">@</span>
+                                                <input type="text"
+                                                    class="form-control form-control-lg bg-light border-0"
+                                                    name="username" id="username" value="<%= player.user_name %>"
+                                                    required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h5 class="mb-4 text-muted border-bottom pb-2 mt-5">Detalles del Jugador</h5>
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-4">
+                                            <label
+                                                class="form-label text-muted small fw-bold text-uppercase">Dorsal</label>
+                                            <input type="number" class="form-control form-control-lg bg-light border-0"
+                                                name="number" id="number" value="<%= player.number %>" required>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label
+                                                class="form-label text-muted small fw-bold text-uppercase">Posición</label>
+                                            <select id="position" name="position"
+                                                class="form-select form-select-lg bg-light border-0" required>
+                                                <option value="<%= player.position %>" selected>
+                                                    <%= player.position %>
+                                                </option>
+                                                <option value="Portero">Portero</option>
+                                                <option value="Defensa Central">Defensa Central</option>
+                                                <option value="Lateral Derecho">Lateral Derecho</option>
+                                                <option value="Lateral Izquierdo">Lateral Izquierdo</option>
+                                                <option value="Mediocampista Defensivo">Mediocampista Defensivo</option>
+                                                <option value="Mediocampista Central">Mediocampista Central</option>
+                                                <option value="Mediocampista Ofensivo">Mediocampista Ofensivo</option>
+                                                <option value="Extremo Derecho">Extremo Derecho</option>
+                                                <option value="Extremo Izquierdo">Extremo Izquierdo</option>
+                                                <option value="Delantero">Delantero</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid gap-2 mt-5">
+                                        <button type="submit" class="btn btn-primary-custom btn-lg shadow-sm">
+                                            <i class="bi bi-save-fill me-2"></i>Guardar Cambios
+                                        </button>
+                                        <a href="/" class="btn btn-light btn-lg border-0 text-muted">Cancelar</a>
+                                    </div>
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+    </html>
