@@ -60,6 +60,28 @@
                                             <input type="number" class="form-control form-control-lg bg-light border-0"
                                                 name="number" id="number" value="<%= player.number %>" required>
                                         </div>
+                                        <div class="col-12 mt-4">
+                                            <label class="form-label text-muted small fw-bold text-uppercase">Foto
+                                                Actual</label>
+                                            <div class="mb-3">
+                                                <% if (player.image) { %>
+                                                    <img src="/assets/img/<%= player.image %>" alt="Current Image"
+                                                        class="img-thumbnail" style="max-height: 150px;">
+                                                    <% } else { %>
+                                                        <p class="text-muted small">No hay imagen asignada.</p>
+                                                        <% } %>
+                                            </div>
+                                            <label class="form-label text-muted small fw-bold text-uppercase">Cambiar
+                                                Foto (Opcional)</label>
+                                            <div class="p-4 border-2 border-dashed rounded-3 bg-light text-center"
+                                                style="border-style: dashed; border-color: #dee2e6;">
+                                                <i class="bi bi-cloud-arrow-up fs-2 text-muted mb-2"></i>
+                                                <p class="small text-muted mb-3">Arrastra tu nueva imagen aquí o haz
+                                                    clic para buscar</p>
+                                                <input type="file" name="image" id="player-img"
+                                                    class="form-control w-auto mx-auto">
+                                            </div>
+                                        </div>
                                         <div class="col-md-8">
                                             <label
                                                 class="form-label text-muted small fw-bold text-uppercase">Posición</label>

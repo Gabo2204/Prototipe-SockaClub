@@ -76,7 +76,7 @@
             <div class="col">
               <div class="player-card-modern">
                 <div class="player-img-wrapper">
-                  <img src="<%= player.image || image %>" alt="<%= player.first_name %>"
+                  <img src="/assets/img/<%= player.image || image %>" alt="<%= player.first_name %>"
                     onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(player.first_name + '+' + player.last_name) %>&size=300&background=FF2E63&color=fff&bold=true'">
                 </div>
                 <div class="player-content">
