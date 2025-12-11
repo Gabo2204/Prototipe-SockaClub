@@ -41,7 +41,7 @@ exports.addPlayer = (req, res) => {
             // check the filetype before uploading it
             if (uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || uploadedFile.mimetype === 'image/gif') {
                 // upload the file to the /public/assets/img directory
-                uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+                uploadedFile.mv(`public/assets/img/${image_name}`, (err) => {
                     if (err) {
                         return res.status(500).send(err);
                     }
@@ -88,13 +88,63 @@ exports.editPlayer = (req, res) => {
     let position = req.body.position;
     let number = req.body.number;
 
-    let query = "UPDATE `players` SET `first_name` = '" + first_name + "', `last_name` = '" + last_name + "', `position` = '" + position + "', `number` = '" + number + "' WHERE `players`.`id` = '" + playerId + "'";
-    db.query(query, (err, result) => {
-        if (err) {
-            return res.status(500).send(err);
+    // Check if an image is being uploaded
+    if (req.files && req.files.image) {
+        let uploadedFile = req.files.image;
+
+        // Validation
+        if (!(uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || uploadedFile.mimetype === 'image/gif')) {
+            return res.status(400).send("Invalid File format. Only 'gif', 'jpeg' and 'png' images are allowed.");
         }
-        res.redirect('/');
-    });
+
+        // Get current player data to retrieve username and old image
+        let getPlayerQuery = "SELECT * FROM `players` WHERE id = '" + playerId + "'";
+        db.query(getPlayerQuery, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+
+            let player = result[0];
+            let username = player.user_name; // Use existing username
+            let oldImage = player.image;
+
+            let fileExtension = uploadedFile.mimetype.split('/')[1];
+            let image_name = username + '.' + fileExtension;
+
+            // Delete old image if it exists and is different (or blindly delete to ensure cleanup if extension changes)
+            if (oldImage && oldImage.length > 0) {
+                fs.unlink(`public/assets/img/${oldImage}`, (err) => {
+                    if (err) console.log("Old image deletion failed or file missing: " + err);
+                });
+            }
+
+            // Upload new image
+            uploadedFile.mv(`public/assets/img/${image_name}`, (err) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+
+                // Update database with new image name
+                let query = "UPDATE `players` SET `first_name` = '" + first_name + "', `last_name` = '" + last_name + "', `position` = '" + position + "', `number` = '" + number + "', `image` = '" + image_name + "' WHERE `players`.`id` = '" + playerId + "'";
+                db.query(query, (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/');
+                });
+            });
+        });
+
+    } else {
+        // No new image uploaded, just update other details
+        let query = "UPDATE `players` SET `first_name` = '" + first_name + "', `last_name` = '" + last_name + "', `position` = '" + position + "', `number` = '" + number + "' WHERE `players`.`id` = '" + playerId + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.redirect('/');
+        });
+    }
 }
 
 exports.deletePlayer = (req, res) => {
