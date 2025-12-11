@@ -33,7 +33,7 @@ Set up environment variables
 Run the application: npm start
 
 # 📁 Project Structure
-'''
+```
 Prototipe-SockaClub
 ├── controllers/
 ├── models/
@@ -41,4 +41,4 @@ Prototipe-SockaClub
 ├── routes/
 ├── public/
 └── database/
-'''
+```
